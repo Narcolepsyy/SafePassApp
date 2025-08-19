@@ -1,0 +1,12 @@
+body {
+  background: $gray-100;
+}
+
+a.logo {
+  display: flex;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+.form_control.input-with-errors {
+  border: 1px solid $danger;
+}

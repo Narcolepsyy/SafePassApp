@@ -1,0 +1,28 @@
+<h1>New Entry</h1>
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <%= form_with(model: @entry) do |form|  %>
+        <div class="form-floating mb-3">
+          <%= form.text_field(:name, placeholder:'Name', class:'form-control') %>
+          <%= form.label(:name) %>
+        </div>
+          <div class="form-floating mb-3">
+            <%= form.text_field(:name, placeholder:'URL', class:'form-control') %>
+            <%= form.label(:url) %>
+          </div>
+          <div class="form-floating mb-3">
+            <%= form.text_field(:name, placeholder:'Username', class:'form-control') %>
+            <%= form.label(:username) %>
+          </div>
+          <div class="form-floating mb-3">
+            <%= form.text_field(:name, placeholder:'Password', class:'form-control') %>
+            <%= form.label(:password) %>
+          </div>
+          <%= form.submit('Create new entry', class: 'btn btn-primary') %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

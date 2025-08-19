@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+  <div class="container">
+  <%= logo("h4") %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to('About', about_path, class: 'nav-link') %>
+        </li>
+        <li class="nav-item">
+          <%= link_to('New Entry', new_entry_path, class: 'nav-link ms-5') %>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <% if user_signed_in? %>
+          <div class="dropdown">
+            <button class="nav-link btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <h6 class="dropdown-header">
+                  Signed is as: <br> <%= current_user.email %>
+                </h6>
+              </li>
+              <li><%= link_to("Account", edit_user_registration_path, class:"dropdown-item") %></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><%= link_to('Sign out', destroy_user_session_path, class: 'dropdown-item', data:{turbo_method: :delete}) %></li>
+            </ul>
+          </div>
+        <%else %>
+          <li class="nav-item">
+            <%= link_to('Sign in', new_user_session_path, class: 'nav-link') %>
+          </li>
+          <li class="nav-item">
+            <%= link_to('Sign up', new_user_registration_path, class: 'nav-link') %>
+        <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
