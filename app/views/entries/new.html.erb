@@ -3,6 +3,14 @@
   <div class="col">
     <div class="card">
       <div class="card-body">
+        <% if @entry.errors.any? %>
+        <div id="error-explanation">
+          <h4>Please fix the <%=pluralize(@entry.errors.count, 'error') %> below and try again</h4>
+          <ul><% @entry.errors.each do |error| %></ul>
+              <li><%= error.full_message %></li>
+            <% end %>
+        </div>
+        <% end %>
         <%= form_with(model: @entry) do |form|  %>
         <div class="form-floating mb-3">
           <%= form.text_field(:name, placeholder:'Name', class:'form-control') %>
