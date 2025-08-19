@@ -7,7 +7,7 @@ class Entry < ApplicationRecord
   private
 
   def url_must_be_valid
-    unless url.to_s.start_with?('http://', 'https://')
+    unless url.to_s.start_with?("http://", "https://")
       errors.add(:url, "must start with http:// or https://")
     end
   end
