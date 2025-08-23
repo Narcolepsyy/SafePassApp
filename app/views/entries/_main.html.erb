@@ -1,0 +1,43 @@
+<div class="d-flex flex-column justify-content-between h-100">
+  <div>
+    <%= render(layout: 'entries/entry_name', locals: { entry: entry }) do %>
+      <h1 class="mb-0"><%= entry.name %></h1>
+    <% end %>
+
+    <div class="mt-5">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="form-floating">
+            <%= text_field_tag(:username, entry.username, readonly: true, class: "form-control", placeholder: "email") %>
+            <%= label_tag(:username, "Username", class: "fw-bold text-dark") %>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="form-floating">
+            <%= text_field_tag(:password, entry.password, readonly: true, class: "form-control", type: :password, placeholder: "password") %>
+            <%= label_tag(:password, "Password", class: "fw-bold text-dark") %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-4 ms-4 ps-1">
+    <div class="fw-bold">URL</div>
+    <% if entry.url.present? %>
+      <%= link_to entry.url, target: "_blank", rel: "noopener noreferrer" do %>
+        <%= entry.url %> <i class="bi bi-box-arrow-up-right ms-1"></i>
+      <% end %>
+    <% else %>
+      <span class="text-muted">No URL</span>
+    <% end %>
+  </div>
+  <div class="text-center">
+    <div>
+      Modified at: <%= format_date(entry.updated_at) %>
+    </div>
+    <div>
+      Created at: <%= format_date(entry.created_at) %>
+    </div>
+  </div>
+</div>

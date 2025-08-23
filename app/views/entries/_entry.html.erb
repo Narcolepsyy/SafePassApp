@@ -1,0 +1,5 @@
+<%= link_to(entry_path(entry), class:'nav-link') do %>
+  <%=render(layout: 'entries/entry_name', locals: { entry: entry } ) do  %>
+    <%=entry.name %>
+  <% end %>
+<% end %>

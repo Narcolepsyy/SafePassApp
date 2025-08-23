@@ -1,0 +1,16 @@
+<h1>Entries</h1>
+
+<div class="row">
+  <div id="dashboard" class="card shadow-sm">
+    <div class="entries-card">
+      <div class="entries-card__sidebar">
+        <nav class="nav flex-column">
+          <%= render(@entries)  %>
+        </nav>
+      </div>
+      <div class="entries-card__main">
+        <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+      </div>
+    </div>
+  </div>
+</div>
