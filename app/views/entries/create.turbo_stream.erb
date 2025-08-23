@@ -1,0 +1,6 @@
+<%= render_flash_stream %>
+<%= turbo_stream.append('entries-list', @entry) %>
+<%= turbo_stream.update('main-dashboard', partial: 'entries/main', locals: { entry: @entry })%>
+
+
+

@@ -1,4 +1,4 @@
-<%= link_to(entry_path(entry), class:'nav-link') do %>
+<%= link_to(entry_path(entry), class:'nav-link', data: {turbo_frame: 'main-dashboard'}) do %>
   <%=render(layout: 'entries/entry_name', locals: { entry: entry } ) do  %>
     <%=entry.name %>
   <% end %>

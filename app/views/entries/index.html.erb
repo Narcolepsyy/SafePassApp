@@ -1,15 +1,19 @@
-<h1>Entries</h1>
-
 <div class="row">
+  <div class="entries-actions card">
+    <div></div>
+    <%=link_to("+ New entry", new_entry_path, class: "btn btn-primary", data: {turbo_frame:"main-dashboard"}) %>
+  </div>
   <div id="dashboard" class="card shadow-sm">
     <div class="entries-card">
       <div class="entries-card__sidebar">
-        <nav class="nav flex-column">
+        <nav id=entries-list class="nav flex-column">
           <%= render(@entries)  %>
         </nav>
       </div>
       <div class="entries-card__main">
+        <%= turbo_frame_tag('main-dashboard') do %>
         <%= render(partial: 'entries/main', locals: {entry: @main_entry}) %>
+        <% end %>
       </div>
     </div>
   </div>

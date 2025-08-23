@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def logo(size="h2")
+  def logo(size = "h2")
     link_to(root_path, class: "logo #{size}") do
       "<i class =\"bi bi-safe-fill me-2\"></i>SafePass".html_safe
     end
@@ -9,6 +9,10 @@ module ApplicationHelper
   end
 
   def format_date(date)
-    date.in_time_zone('Asia/Bangkok').strftime("%m/%d/%Y, %I:%M %p") if date
+    date.in_time_zone("Asia/Bangkok").strftime("%m/%d/%Y, %I:%M %p") if date
+  end
+
+  def render_flash_stream
+    turbo_stream.update("flash", partial: "shared/flash")
   end
 end

@@ -1,43 +1,54 @@
-<div class="d-flex flex-column justify-content-between h-100">
-  <div>
-    <%= render(layout: 'entries/entry_name', locals: { entry: entry }) do %>
-      <h1 class="mb-0"><%= entry.name %></h1>
-    <% end %>
-
-    <div class="mt-5">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="form-floating">
-            <%= text_field_tag(:username, entry.username, readonly: true, class: "form-control", placeholder: "email") %>
-            <%= label_tag(:username, "Username", class: "fw-bold text-dark") %>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="form-floating">
-            <%= text_field_tag(:password, entry.password, readonly: true, class: "form-control", type: :password, placeholder: "password") %>
-            <%= label_tag(:password, "Password", class: "fw-bold text-dark") %>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="mt-4 ms-4 ps-1">
-    <div class="fw-bold">URL</div>
-    <% if entry.url.present? %>
-      <%= link_to entry.url, target: "_blank", rel: "noopener noreferrer" do %>
-        <%= entry.url %> <i class="bi bi-box-arrow-up-right ms-1"></i>
+<% if entry.present? %>
+  <div class="d-flex flex-column justify-content-between h-100">
+    <div>
+      <%= render(layout: 'entries/entry_name', locals: { entry: entry }) do %>
+        <h1 class="mb-0"><%= entry.name %></h1>
       <% end %>
-    <% else %>
-      <span class="text-muted">No URL</span>
-    <% end %>
-  </div>
-  <div class="text-center">
-    <div>
-      Modified at: <%= format_date(entry.updated_at) %>
+
+      <div class="mt-5">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="form-floating">
+              <%= text_field_tag(:display_username, entry.username, readonly: true, class: "form-control", placeholder: "email", id: "display_username_#{entry.id}") %>
+              <%= label_tag(:display_username, "Username", class: "fw-bold text-dark", for: "display_username_#{entry.id}") %>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="form-floating">
+              <%= text_field_tag(:display_password, entry.password, readonly: true, class: "form-control", type: :password, placeholder: "password", id: "display_password_#{entry.id}") %>
+              <%= label_tag(:display_password, "Password", class: "fw-bold text-dark", for: "display_password_#{entry.id}") %>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div>
-      Created at: <%= format_date(entry.created_at) %>
+
+    <div class="mt-4 ms-4 ps-1">
+      <div class="fw-bold">URL</div>
+      <% if entry.url.present? %>
+        <%= link_to entry.url, target: "_blank", rel: "noopener noreferrer" do %>
+          <%= entry.url %> <i class="bi bi-box-arrow-up-right ms-1"></i>
+        <% end %>
+      <% else %>
+        <span class="text-muted">No URL</span>
+      <% end %>
+    </div>
+    <div class="text-center">
+      <div>
+        Modified at: <%= format_date(entry.updated_at) %>
+      </div>
+      <div>
+        Created at: <%= format_date(entry.created_at) %>
+      </div>
     </div>
   </div>
-</div>
+<% else %>
+  <div class="d-flex flex-column justify-content-center align-items-center h-100 text-center">
+    <div class="mb-4">
+      <i class="bi bi-safe-fill" style="font-size: 4rem; color: #6c757d;"></i>
+    </div>
+    <h2 class="text-muted mb-3">No Entries Yet</h2>
+    <p class="text-muted mb-4">Create your first password entry to get started with SafePass.</p>
+    <%= link_to("+ Create First Entry", new_entry_path, class: "btn btn-primary", data: {turbo_frame:"main-dashboard"}) %>
+  </div>
+<% end %>

@@ -1,6 +1,15 @@
-<div class="d-flex align-items-center">
+<% if entry.present? %>
+  <div class="d-flex align-items-center">
     <div class="entry-favicon">
-      <%= image_tag("https://www.google.com/s2/favicons?domain=#{entry.url}&sz=32", alt:entry.name) %>
+      <%= image_tag("https://www.google.com/s2/favicons?domain=#{entry.url}&sz=32", alt: entry.name) %>
     </div>
-    <%=yield%>
+    <%= yield %>
   </div>
+<% else %>
+  <div class="d-flex align-items-center">
+    <div class="entry-favicon">
+      <i class="bi bi-safe-fill"></i>
+    </div>
+    <%= yield %>
+  </div>
+<% end %>

@@ -1,32 +1,38 @@
-<h1>New Entry</h1>
-<div class="row">
+<%= turbo_frame_tag("main-dashboard") do %>
+  <div class="d-flex align-items-center justify-content-between ">
+    <h1>New Entry</h1>
+    <%= link_to("Cancel", entries_path, class: "btn btn-sm btn-outline-danger") %>
+  </div>
+  <div class="row">
   <div class="col">
     <div class="card">
       <div class="card-body">
         <% if @entry.errors.any? %>
         <div id="error-explanation">
           <h4>Please fix the <%=pluralize(@entry.errors.count, 'error') %> below and try again</h4>
-          <ul><% @entry.errors.each do |error| %></ul>
+          <ul>
+            <% @entry.errors.each do |error| %>
               <li><%= error.full_message %></li>
             <% end %>
+          </ul>
         </div>
         <% end %>
         <%= form_with(model: @entry) do |form|  %>
         <div class="form-floating mb-3">
-          <%= form.text_field(:name, placeholder:'Name', class:'form-control') %>
-          <%= form.label(:name) %>
+          <%= form.text_field(:name, placeholder:'Name', class:'form-control', id: 'entry_name') %>
+          <%= form.label(:name, for: 'entry_name') %>
         </div>
           <div class="form-floating mb-3">
-            <%= form.text_field(:url, placeholder:'URL', class:'form-control') %>
-            <%= form.label(:url) %>
+            <%= form.text_field(:url, placeholder:'URL', class:'form-control', id: 'entry_url') %>
+            <%= form.label(:url, for: 'entry_url') %>
           </div>
           <div class="form-floating mb-3">
-            <%= form.text_field(:username, placeholder:'Username', class:'form-control') %>
-            <%= form.label(:username) %>
+            <%= form.text_field(:username, placeholder:'Username', class:'form-control', id: 'entry_username') %>
+            <%= form.label(:username, for: 'entry_username') %>
           </div>
           <div class="form-floating mb-3">
-            <%= form.text_field(:password, placeholder:'Password', class:'form-control') %>
-            <%= form.label(:password) %>
+            <%= form.text_field(:password, placeholder:'Password', class:'form-control', id: 'entry_password') %>
+            <%= form.label(:password, for: 'entry_password') %>
           </div>
           <%= form.submit('Create new entry', class: 'btn btn-primary') %>
         <% end %>
@@ -34,3 +40,4 @@
     </div>
   </div>
 </div>
+<%end %>

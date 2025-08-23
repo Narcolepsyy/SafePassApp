@@ -9,9 +9,6 @@
         <li class="nav-item">
           <%= link_to('About', about_path, class: 'nav-link') %>
         </li>
-        <li class="nav-item">
-          <%= link_to('New Entry', new_entry_path, class: 'nav-link ms-5') %>
-        </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <% if user_signed_in? %>

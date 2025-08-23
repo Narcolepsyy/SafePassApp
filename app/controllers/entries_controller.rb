@@ -20,10 +20,12 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.new(entry_params)
 
     if @entry.save
-      flash[:notice] = "Entry has been created."
-      redirect_to root_path
+      flash.now[:notice] = "<strong>#{@entry.name}</strong> has been created.".html_safe
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { }
+      end
     else
-      flash[:alert] = "Sorry, there was an error."
       render :new, status: :unprocessable_entity
     end
   end
