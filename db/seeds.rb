@@ -7,3 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Entry.create!(
+  user_id: 1,
+  name: 'Github',
+  url: 'https://github.com',
+  username: 'your_username',
+  password: 'your_password',
+)

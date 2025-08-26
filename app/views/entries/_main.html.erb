@@ -2,7 +2,22 @@
   <div class="d-flex flex-column justify-content-between h-100">
     <div>
       <%= render(layout: 'entries/entry_name', locals: { entry: entry }) do %>
-        <h1 class="mb-0"><%= entry.name %></h1>
+        <div class="d-flex align-items-center justify-content-between flex-grow-1">
+          <h1 class="mb-0"><%= entry.name %></h1>
+          <div class="dropdown">
+            <button class="btn btn-outline-light border-0 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to(entry_path(entry), data: {turbo_method: :delete}, class: "dropdown-item text-danger") do %>
+                  <i class="bi bi-trash3-fill"></i> Delete Entry
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+
       <% end %>
 
       <div class="mt-5">

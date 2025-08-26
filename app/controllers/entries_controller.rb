@@ -1,6 +1,7 @@
 class EntriesController < ApplicationController
   # we define new instance in entry model here
   before_action :authenticate_user!
+  before_action :set_entry, only: [ :show, :destroy ]
   # this will ensure that user is logged in before accessing any action in this controller
   # # if user is not logged in, it will redirect to login page
   def index
@@ -29,8 +30,20 @@ class EntriesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    @entry.destroy
+    flash.now[:notice] = "#{@entry.name} has been deleted."
+    respond_to do |format|
+      format.html { redirect_to root_path, status: :see_other }
+      format.turbo_stream { }
+    end
+  end
   private
   def entry_params
     params.require(:entry).permit(:name, :url, :username, :password)
+  end
+  def set_entry
+    @entry = current_user.entries.find(params[:id])
   end
 end
