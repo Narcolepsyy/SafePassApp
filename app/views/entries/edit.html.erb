@@ -1,0 +1,28 @@
+<%= turbo_frame_tag(params[:input]) do %>
+  <%= form_with(model: @entry, class: 'd-flex position-relative') do |form| %>
+    <div class="form-floating edit-name">
+      <%= form.text_field(:name, placeholder: 'Name', class: 'form-control') %>
+      <%= form.label(:name, class: 'fw-bold text-dark') %>
+    </div>
+    <div class="form-floating edit-url">
+      <%= form.text_field(:url, placeholder: 'URL', class: 'form-control') %>
+      <%= form.label(:url, class: 'fw-bold text-dark') %>
+    </div>
+    <div class="form-floating edit-username">
+      <%= form.text_field(:username, placeholder: 'Username', class: 'form-control') %>
+      <%= form.label(:username, class: 'fw-bold text-dark') %>
+    </div>
+    <div class="form-floating edit-password">
+      <%= form.text_field(:password, placeholder: 'Password', class: 'form-control') %>
+      <%= form.label(:password, class: 'fw-bold text-dark') %>
+    </div>
+    <div class="entry-edit-actions">
+      <%= form.button(class: 'btn btn-sm btn-outline-success me-2 rounded-circle') do %>
+        <i class="bi bi-check-lg"></i>
+      <% end %>
+      <%= link_to(entry_path(@entry), class: 'btn btn-sm btn-outline-danger rounded-circle') do %>
+        <i class="bi bi-x-lg"></i>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

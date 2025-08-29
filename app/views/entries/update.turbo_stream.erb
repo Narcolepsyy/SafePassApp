@@ -1,0 +1,5 @@
+<%= render_flash_stream %>
+<%= turbo_stream.replace(@entry) %>
+  <%= turbo_stream.update('main-dashboard') do %>
+      <%= render(partial: 'entries/main', locals: { entry: @entry }) %>
+  <% end %>

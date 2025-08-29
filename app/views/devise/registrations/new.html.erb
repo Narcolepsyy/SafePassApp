@@ -1,6 +1,6 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: { controller: "password-strength", "password-strength-url-value": password_strength_path } }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="form-floating mb-3">
@@ -12,8 +12,15 @@
     <em>(<%= @minimum_password_length %> characters minimum)</em>
   <% end %><br />
 
+  <div class="mb-2 d-flex align-items-center gap-2">
+    <span data-password-strength-target="status" class="badge text-bg-secondary">Not checked</span>
+    <div class="progress flex-grow-1" role="progressbar" aria-label="Password strength" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar" style="width: 0%" data-password-strength-target="meter"></div>
+    </div>
+  </div>
+
   <div class="form-floating mb-3">
-    <%= f.password_field :password, autocomplete: "new-password" , class: "form-control", placeholder: "password"%>
+    <%= f.password_field :password, autocomplete: "new-password" , class: "form-control", placeholder: "password", data: { "password-strength-target": "input", action: "input->password-strength#onInput" }%>
     <%= f.label :password %>
   </div>
 

@@ -29,3 +29,6 @@
 
 en:
   hello: "Hello world"
+  errors:
+    messages:
+      weak_password: "is too weak"

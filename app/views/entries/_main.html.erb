@@ -1,69 +1,109 @@
-<% if entry.present? %>
-  <div class="d-flex flex-column justify-content-between h-100">
-    <div>
-      <%= render(layout: 'entries/entry_name', locals: { entry: entry }) do %>
-        <div class="d-flex align-items-center justify-content-between flex-grow-1">
+<div class="d-flex flex-column justify-content-between h-100">
+  <div>
+    <%= render(layout: 'entries/entry_name', locals: {entry: entry}) do %>
+      <div id="entry-name" class="d-flex align-items-center justify-content-between flex-grow-1">
+        <%= turbo_frame_tag(:entry_name, class: 'w-100') do %>
           <h1 class="mb-0"><%= entry.name %></h1>
-          <div class="dropdown">
-            <button class="btn btn-outline-light border-0 text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <%= link_to(entry_path(entry), data: {turbo_method: :delete}, class: "dropdown-item text-danger") do %>
-                  <i class="bi bi-trash3-fill"></i> Delete Entry
-                <% end %>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-      <% end %>
-
-      <div class="mt-5">
-        <ul class="list-group">
-          <li class="list-group-item">
-            <div class="form-floating">
-              <%= text_field_tag(:display_username, entry.username, readonly: true, class: "form-control", placeholder: "email", id: "display_username_#{entry.id}") %>
-              <%= label_tag(:display_username, "Username", class: "fw-bold text-dark", for: "display_username_#{entry.id}") %>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="form-floating">
-              <%= text_field_tag(:display_password, entry.password, readonly: true, class: "form-control", type: :password, placeholder: "password", id: "display_password_#{entry.id}") %>
-              <%= label_tag(:display_password, "Password", class: "fw-bold text-dark", for: "display_password_#{entry.id}") %>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mt-4 ms-4 ps-1">
-      <div class="fw-bold">URL</div>
-      <% if entry.url.present? %>
-        <%= link_to entry.url, target: "_blank", rel: "noopener noreferrer" do %>
-          <%= entry.url %> <i class="bi bi-box-arrow-up-right ms-1"></i>
         <% end %>
-      <% else %>
-        <span class="text-muted">No URL</span>
-      <% end %>
-    </div>
-    <div class="text-center">
-      <div>
-        Modified at: <%= format_date(entry.updated_at) %>
+        <div class="dropdown">
+          <button class="btn btn-outline-light border-0 text-dark me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <%= link_to(edit_entry_path(entry, input: :entry_name), data: {turbo_frame: :entry_name}, class: 'dropdown-item') do %>
+                <i class="bi bi-pencil-square"></i> Edit Name
+              <% end %>
+            </li>
+            <li>
+              <%= link_to(entry_path(entry), data: {turbo_method: :delete}, class: 'dropdown-item text-danger') do %>
+                <i class="bi bi-trash3-fill"></i> Delete Entry
+              <% end %>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div>
-        Created at: <%= format_date(entry.created_at) %>
+    <% end %>
+    <div class="mt-5">
+      <ul class="list-group">
+        <li id="entry-username" class="list-group-item">
+          <%= turbo_frame_tag(:entry_username) do %>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="form-floating w-100">
+                <%= text_field_tag(:username, entry.username, readonly: true, class: 'form-control-plaintext', placeholder: 'email') %>
+                <%= label_tag(:username, "Username", class: 'fw-bold text-dark') %>
+              </div>
+              <div class="actions d-flex">
+                <button
+                  class="btn btn-outline-primary border-0"
+                  data-controller="clipboard"
+                  data-action="click->clipboard#copy"
+                  data-clipboard-content-param="<%= entry.username %>"
+                >
+                  <i class="bi bi-clipboard-plus"></i>
+                </button>
+                <%= link_to(edit_entry_path(entry, input: :entry_username), class: 'btn btn-outline-light border-0 text-dark') do %>
+                  <i class="bi bi-pencil-square"></i>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </li>
+        <li id="entry-password" class="list-group-item" data-controller="toggle-password">
+          <%= turbo_frame_tag(:entry_password) do %>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="form-floating w-100">
+                <%= text_field_tag(:password, entry.password, readonly: true, class: 'form-control-plaintext', type: :password, placeholder: 'password', data: {toggle_password_target: 'input'}) %>
+                <%= label_tag(:password, "Password", class: 'fw-bold text-dark') %>
+              </div>
+              <div class="actions d-flex">
+                <button
+                  class="btn btn-outline-primary border-0"
+                  data-action="click->toggle-password#toggle"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button
+                  class="btn btn-outline-primary border-0"
+                  data-controller="clipboard"
+                  data-action="click->clipboard#copy"
+                  data-clipboard-content-param="<%= entry.password %>"
+                >
+                  <i class="bi bi-clipboard-plus"></i>
+                </button>
+                <%= link_to(edit_entry_path(entry, input: :entry_password), class: 'btn btn-outline-light border-0 text-dark') do %>
+                  <i class="bi bi-pencil-square"></i>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </li>
+      </ul>
+      <div id="entry-url" class="mt-4">
+        <%= turbo_frame_tag(:entry_url) do %>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="flex-grow-1 ms-4 ps-1">
+              <div class="fw-bold">URL</div>
+              <%= link_to(entry.url, target: :_blank, rel: 'noopener noreferrer') do %>
+                <%= entry.url %> <i class="bi bi-box-arrow-up-right ms-1"></i>
+              <% end %>
+            </div>
+            <div class="actions">
+              <%= link_to(edit_entry_path(entry, input: :entry_url), class: 'btn btn-outline-light border-0 text-dark me-3') do %>
+                <i class="bi bi-pencil-square"></i>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
-<% else %>
-  <div class="d-flex flex-column justify-content-center align-items-center h-100 text-center">
-    <div class="mb-4">
-      <i class="bi bi-safe-fill" style="font-size: 4rem; color: #6c757d;"></i>
+  <div class="text-center">
+    <div>
+      Modified at: <%= format_time(entry.updated_at) %>
     </div>
-    <h2 class="text-muted mb-3">No Entries Yet</h2>
-    <p class="text-muted mb-4">Create your first password entry to get started with SafePass.</p>
-    <%= link_to("+ Create First Entry", new_entry_path, class: "btn btn-primary", data: {turbo_frame:"main-dashboard"}) %>
+    <div>
+      Created at: <%= format_time(entry.created_at) %>
+    </div>
   </div>
-<% end %>
+</div>

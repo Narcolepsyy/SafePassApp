@@ -18,6 +18,26 @@ FileUtils.chdir APP_ROOT do
   # Install JavaScript dependencies
   system("yarn install --check-files")
 
+  # Optional: install Python microservice dependencies
+  begin
+    service_dir = File.join(APP_ROOT, "python", "password_service")
+    venv_dir = File.join(service_dir, ".venv")
+    req_file = File.join(service_dir, "requirements.txt")
+
+    if File.exist?(req_file)
+      puts "\n== Setting up Python virtualenv for password service =="
+      unless File.exist?(File.join(venv_dir, "bin", "python"))
+        system("python3 --version > /dev/null 2>&1") or raise "python3 not available"
+        system!("python3", "-m", "venv", venv_dir)
+      end
+      system!(File.join(venv_dir, "bin", "python"), "-m", "pip", "install", "--upgrade", "pip")
+      system!(File.join(venv_dir, "bin", "python"), "-m", "pip", "install", "-r", req_file)
+      puts "Python microservice dependencies installed."
+    end
+  rescue => e
+    warn "[setup] Skipping Python deps (#{e.message}). You can install later in #{service_dir}."
+  end
+
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"

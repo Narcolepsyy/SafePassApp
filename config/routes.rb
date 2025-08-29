@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   root "entries#index"
 
   resources :entries
+
+  # Password strength JSON endpoint
+  resource :password_strength, only: [ :create ]
 end

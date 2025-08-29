@@ -1,3 +1,4 @@
 web: env RUBY_DEBUG_OPEN=true bin/rails server
 js: yarn build --watch
 css: yarn watch:css
+python-password-service: bash -lc "cd python/password_service && if [ -f .venv/bin/activate ]; then source .venv/bin/activate; fi; exec python3 -m uvicorn main:app --host 127.0.0.1 --port ${PASSWORD_SERVICE_PORT:-8001}"
