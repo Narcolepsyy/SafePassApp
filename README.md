@@ -1,6 +1,8 @@
 # README
 
 ![Sign up](signup_new.png)
+![Dashboard](dashboard.png)
+
 
 # SafePassApp
 
