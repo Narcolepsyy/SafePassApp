@@ -1,8 +1,6 @@
 # README
 
-![Sign up](signup_new.png)
-![Dashboard](dashboard.png)
-
+![Demo video](https://youtu.be/LknFKQUcIFg)
 
 # SafePassApp
 
